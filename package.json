@@ -1,0 +1,19 @@
+{
+  "name": "chat-admin-for-skotos",
+  "version": "1.0.0",
+  "description": "Jitsi Chat Admin for SkotOS",
+  "main": "src/index.js",
+  "engines": {
+    "node": ">=16"
+  },
+  "dependencies": {
+    "jsonwebtoken": "^8.5.1"
+  },
+  "scripts": {
+    "run": "echo \"Error: TBA\" && exit 1",
+  },
+  "contributors": [
+    "Noah Gibbs"
+  ],
+  "license": "Apache-2.0"
+}

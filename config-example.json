@@ -1,0 +1,17 @@
+{
+    "jitsi": {
+        "domain": "meet.jitsi"
+    },
+    "jwt": {
+        "app_id": "skotos",
+        "secret": "1234567890"
+    },
+    "inbound": {
+        "host": "localhost",
+        "port": 4114
+    },
+    "outbound": {
+        "host": "localhost",
+        "port": 10091
+    },
+}
