@@ -7,11 +7,11 @@
         "secret": "1234567890"
     },
     "inbound": {
-        "host": "localhost",
+        "host": "127.0.0.1",
         "port": 4114
     },
     "outbound": {
-        "host": "localhost",
+        "host": "127.0.0.1",
         "port": 10091
     },
 }
