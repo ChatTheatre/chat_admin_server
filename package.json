@@ -10,7 +10,7 @@
     "jsonwebtoken": "^8.5.1"
   },
   "scripts": {
-    "run": "echo \"Error: TBA\" && exit 1",
+    "run": "echo \"Error: TBA\" && exit 1"
   },
   "contributors": [
     "Noah Gibbs"

@@ -39,14 +39,15 @@ Note that you'll need to follow the existing naming convention for plugins for y
 
 ## Protocol
 
-CAS reads up to 6 ASCII bytes between '0' and '9' followed by a NUL character (0). That gives the length in bytes of the following JSON object. It should be a single object with the following fields:
+CAS reads a JSON object followed by a NUL character (a.k.a. null byte) or newline. It should be a single object with some or all of the following fields:
 
+* cmd (string, usually "jwt_token")
 * displayName (string)
 * email (string)
 * channel (string, can be "\*" for all channels)
 * moderator (boolean)
 * avatar (URL string)
-* duration (integer)
+* validUntil (integer)
 
 The email and avatar fields are optional. The others are mandatory.
 
@@ -55,3 +56,5 @@ The response will be another length-tagged JSON object with the following fields
 * success (boolean)
 * message (string, usually "OK" or an error)
 * token (string, the new JWT token or empty)
+* time (integer, current server time)
+
