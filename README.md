@@ -47,7 +47,8 @@ CAS reads a JSON object followed by a NUL character (a.k.a. null byte) or newlin
 * channel (string, can be "\*" for all channels)
 * moderator (boolean)
 * avatar (URL string)
-* validUntil (integer)
+* validUntil (integer) - mutually exclusive with validFor, given in Epoch-relative seconds
+* validFor (integer) - mutually exclusive with validUntil, given in seconds
 
 The email and avatar fields are optional. The others are mandatory.
 

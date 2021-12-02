@@ -55,8 +55,12 @@ let Listener = function(conn) {
                 "iss": config.jwt.app_id,
                 "sub": config.jitsi.domain,
                 "room": d.channel,
-                "exp": d.validUntil
             };
+            if(d.validUntil) {
+                encodeable.exp = d.validUntil;
+            } else if (d.validFor) {
+                encodeable.expiresIn = parseInt(d.validFor);
+            }
             if(d.email) {
                 encodeable.context.email = d.email;
             }
