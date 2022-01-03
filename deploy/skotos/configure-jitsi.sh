@@ -27,10 +27,6 @@ cat >/var/chat_admin_server/chat_admin_config.json <<EndOfJSON
         "app_id": "$APP_ID",
         "secret": "$APP_SECRET"
     },
-    "inbound": {
-        "host": "127.0.0.1",
-        "port": 4114
-    },
     "outbound": {
         "host": "127.0.0.1",
         "port": 11091
