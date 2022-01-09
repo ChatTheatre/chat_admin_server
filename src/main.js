@@ -45,7 +45,7 @@ let Listener = function(conn) {
             myLogger.log("CAS connection closed: " + event);
         },
         data: function(data) {
-            myLogger.log("Data: ///" + data + "///");
+            //myLogger.log("Data: ///" + data + "///");
             buffer += data;
 
             var chunks = buffer.split("\0");
@@ -63,6 +63,7 @@ let Listener = function(conn) {
                 try {
                     d = JSON.parse(msg);
                 } catch(error) {
+                    console.log("error parsing message", msg);
                     console.log("JSON error:", error);
                     return;
                 }
@@ -94,10 +95,12 @@ let Listener = function(conn) {
                     "success": true,
                     "message": "OK",
                     "token": signature,
-                    "time": parseInt(Date.now() / 1000)
+                    "time": parseInt(Date.now() / 1000),
+                    "seq": d.seq,
                 };
                 //console.log("Returning value with JWT token: " + signature);
-                myConn.write(JSON.stringify(retVal) + '\0');
+                console.log("Returning token for user " + d.displayName + " room " + d.channel + "...");
+                myConn.write(JSON.stringify(retVal) + '\n\0'); /* Newline in case of line-oriented receiver :-( */
             });
         },
     }
