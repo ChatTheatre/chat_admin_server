@@ -36,6 +36,7 @@ let net = require('net');
 
 let Listener = function(conn) {
     var myConn = conn;
+    var buffer = "";
     return {
         error: function(event) {
             myLogger.log("CAS connection error: " + event);
@@ -44,38 +45,60 @@ let Listener = function(conn) {
             myLogger.log("CAS connection closed: " + event);
         },
         data: function(data) {
-            myLogger.log("Data: " + data);
-            d = JSON.parse(data);
-            var encodeable = {
-                "context": {
-                    "user": d.displayName
-                },
-                "moderator": d.moderator,
-                "aud": "jitsi",
-                "iss": config.jwt.app_id,
-                "sub": config.jitsi.domain,
-                "room": d.channel,
-            };
-            if(d.validUntil) {
-                encodeable.exp = d.validUntil;
-            } else if (d.validFor) {
-                encodeable.expiresIn = parseInt(d.validFor);
-            }
-            if(d.email) {
-                encodeable.context.email = d.email;
-            }
-            if(d.avatar) {
-                encodeable.context.avatar = d.avatar;
-            }
-            var signature = jwt.sign(encodeable, config.jwt.secret);
+            myLogger.log("Data: ///" + data + "///");
+            buffer += data;
 
-            var retVal = {
-                "success": true,
-                "message": "OK",
-                "token": signature,
-                "time": parseInt(Date.now() / 1000)
-            };
-            myConn.write(JSON.stringify(retVal) + '\0');
+            var chunks = buffer.split("\0");
+            buffer = chunks.pop(); /* Keep any trailing chars for next time */
+
+            /* Any non-empty NUL-delimited messages that are complete will get processed. */
+            var msgs = [];
+            chunks.forEach((msg) => {
+                if(msg == "") return;
+                msgs.push(msg);
+            });
+
+            msgs.forEach((msg) => {
+                var d;
+                try {
+                    d = JSON.parse(msg);
+                } catch(error) {
+                    console.log("JSON error:", error);
+                    return;
+                }
+                var encodeable = {
+                    "context": {
+                        "user": d.displayName
+                    },
+                    "moderator": d.moderator,
+                    "aud": "jitsi",
+                    "iss": config.jwt.app_id,
+                    "sub": config.jitsi.domain,
+                    "room": d.channel,
+                };
+                if(d.validUntil) {
+                    encodeable.exp = d.validUntil;
+                } else if (d.validFor) {
+                    encodeable.expiresIn = parseInt(d.validFor);
+                }
+                if(d.email) {
+                    encodeable.context.email = d.email;
+                }
+                if(d.avatar) {
+                    encodeable.context.avatar = d.avatar;
+                }
+                //console.log("Encoding JWT with", encodeable);
+                var signature = jwt.sign(encodeable, config.jwt.secret);
+
+                var retVal = {
+                    "success": true,
+                    "message": "OK",
+                    "token": signature,
+                    "time": parseInt(Date.now() / 1000)
+                };
+                //console.log("Returning value with JWT token: " + signature);
+                myConn.write(JSON.stringify(retVal) + '\0');
+            });
         },
     }
 };
