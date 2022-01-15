@@ -12,11 +12,13 @@ JITSI_FQDN="$1"
 APP_ID="$2"
 APP_SECRET="$3"
 
+INSTANCE_FILE=/var/game/.root/usr/System/data/instance
+
 cd /var/chat_admin_server
 
 # Remove jitsi_host line, if any, from SkotOS instance file, then add the new one.
-cat /var/skotos/skoot/usr/System/data/instance | grep -v jitsi_host > /var/skotos/skoot/usr/System/data/instance
-echo "jitsi_host $JITSI_HOST" >> /var/skotos/skoot/usr/System/data/instance
+cat $INSTANCE_FILE | grep -v jitsi_host > $INSTANCE_FILE
+echo "jitsi_host $JITSI_HOST" >> $INSTANCE_FILE
 
 cat >/var/chat_admin_server/chat_admin_config.json <<EndOfJSON
 {
