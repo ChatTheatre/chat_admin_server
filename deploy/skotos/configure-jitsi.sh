@@ -39,5 +39,5 @@ rm -f NO_START.txt # Cron should restart chat_admin_server, once we kill it.
 pgrep -f "chat_admin_config.json" && kill -9 `pgrep -f chat_admin_config.json` || echo "OK..."
 
 # We don't have the SkotOS password, so we can't just do this for ourselves.
-echo "Please log into SkotOS via the telnet port, cd into /usr/System, and then compile initd.c. This will re-read the instance file."
+echo "Please log into SkotOS via the telnet port and run 'code "/usr/System/initd"->get_instance()'. This will re-read the instance file."
 
