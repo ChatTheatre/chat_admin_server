@@ -2,6 +2,8 @@
 
 # Make sure Jitsi isn't configured for a SkotOS instance.
 
+set -e
+
 cd /var/chat_admin_server
 touch NO_START.txt # Cron shouldn't restart the server once it's dead.
 

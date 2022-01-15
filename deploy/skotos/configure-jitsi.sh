@@ -2,6 +2,8 @@
 
 # Make sure Jitsi is configured for a SkotOS instance.
 
+set -e
+
 if [ "$#" -ne 3 ]
 then
   echo "Please supply exactly three arguments! configure-jitsi.sh JITSI_FQDN APP_ID APP_SECRET"
