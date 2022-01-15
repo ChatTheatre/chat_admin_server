@@ -12,5 +12,5 @@ pgrep -f "chat_admin_config.json" && kill -9 `pgrep -f chat_admin_config.json` |
 cat /var/skotos/skoot/usr/System/data/instance | grep -v jitsi_host > /var/skotos/skoot/usr/System/data/instance
 
 # We don't have the SkotOS password, so we can't just do this for ourselves.
-echo "Please log into SkotOS via the telnet port and run 'code "/usr/System/initd"->get_instance()'. This will re-read the instance file."
+echo "Please log into SkotOS via the telnet port and run 'code \"/usr/System/initd\"->get_instance()'. This will re-read the instance file."
 
