@@ -19,7 +19,8 @@ INSTANCE_FILE=/var/game/.root/usr/System/data/instance
 cd /var/chat_admin_server
 
 # Remove jitsi_host line, if any, from SkotOS instance file, then add the new one.
-cat $INSTANCE_FILE | grep -v jitsi_host > $INSTANCE_FILE
+cat $INSTANCE_FILE | grep -v jitsi_host > /tmp/instance_file
+mv /tmp/instance_file $INSTANCE_FILE
 echo "jitsi_host $JITSI_HOST" >> $INSTANCE_FILE
 
 cat >/var/chat_admin_server/chat_admin_config.json <<EndOfJSON
